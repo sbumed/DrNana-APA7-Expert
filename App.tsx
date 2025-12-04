@@ -1,11 +1,11 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import MessageBubble from './components/MessageBubble';
 import InputArea from './components/InputArea';
-import ApiKeyModal from './components/ApiKeyModal';
 import { Message, Sender, ChatStatus, Theme, THEME_COLORS, Language, Attachment } from './types';
-import { sendMessageToGemini, getStoredApiKey } from './services/gemini';
+import { sendMessageToGemini } from './services/gemini';
 import { WELCOME_MESSAGE, SUGGESTION_QUESTIONS, UI_TEXT } from './constants';
 
 const App: React.FC = () => {
@@ -19,19 +19,10 @@ const App: React.FC = () => {
     }
   ]);
   const [status, setStatus] = useState<ChatStatus>(ChatStatus.Idle);
-  const [theme, setTheme] = useState<Theme>('teal');
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>('indigo');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const key = getStoredApiKey();
-    const envKey = process.env.API_KEY;
-    if (!key && !envKey) {
-        setIsSettingsOpen(true);
-    }
-  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -41,7 +32,7 @@ const App: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Update initial welcome message when language changes (only if it's the only message)
+  // Update initial welcome message when language changes
   useEffect(() => {
     if (messages.length === 1 && messages[0].id === 'welcome') {
       setMessages([
@@ -104,9 +95,10 @@ const App: React.FC = () => {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-slate-50">
       
+      {/* Sidebar */}
       <Sidebar 
         isOpen={isSidebarOpen} 
-        onClose={() => setIsSidebarOpen(false)}
+        onClose={() => setIsSidebarOpen(false)} 
         onSelectPrompt={(txt) => handleSendMessage(txt, [])}
         theme={theme}
         language={language}
@@ -116,10 +108,9 @@ const App: React.FC = () => {
           <Header 
             currentTheme={theme} 
             onThemeChange={setTheme} 
-            onOpenSettings={() => setIsSettingsOpen(true)}
-            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
             language={language}
             onToggleLanguage={toggleLanguage}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           />
 
           <main className="flex-1 overflow-y-auto p-4 sm:p-6 scrollbar-hide relative w-full max-w-5xl mx-auto">
@@ -132,7 +123,7 @@ const App: React.FC = () => {
                               <button 
                                     key={idx}
                                     onClick={() => handleSendMessage(q, [])}
-                                    className={`text-left p-4 rounded-xl border bg-white hover:shadow-md transition-all duration-200 text-sm text-slate-700 ${themeData.border} hover:border-${theme}-400`}
+                                    className={`text-left p-4 rounded-xl border bg-white hover:shadow-md transition-all duration-200 text-sm text-slate-700 ${themeData.border} hover:border-slate-400`}
                               >
                                   {q}
                               </button>
@@ -168,12 +159,6 @@ const App: React.FC = () => {
               />
           </div>
       </div>
-
-      <ApiKeyModal 
-        isOpen={isSettingsOpen} 
-        onClose={() => setIsSettingsOpen(false)} 
-        language={language}
-      />
     </div>
   );
 };

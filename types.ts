@@ -28,13 +28,41 @@ export enum ChatStatus {
   Error = 'error'
 }
 
-export type Theme = 'teal' | 'blue' | 'rose' | 'amber';
+export type Theme = 'indigo' | 'emerald' | 'violet' | 'orange';
 
 export const THEME_COLORS: Record<Theme, { primary: string, secondary: string, text: string, light: string, border: string, hover: string }> = {
-  teal: { primary: 'bg-teal-600', secondary: 'bg-teal-100', text: 'text-teal-600', light: 'bg-teal-50', border: 'border-teal-200', hover: 'hover:bg-teal-50' },
-  blue: { primary: 'bg-blue-600', secondary: 'bg-blue-100', text: 'text-blue-600', light: 'bg-blue-50', border: 'border-blue-200', hover: 'hover:bg-blue-50' },
-  rose: { primary: 'bg-rose-600', secondary: 'bg-rose-100', text: 'text-rose-600', light: 'bg-rose-50', border: 'border-rose-200', hover: 'hover:bg-rose-50' },
-  amber: { primary: 'bg-amber-600', secondary: 'bg-amber-100', text: 'text-amber-600', light: 'bg-amber-50', border: 'border-amber-200', hover: 'hover:bg-amber-50' }
+  indigo: { 
+    primary: 'bg-indigo-600', 
+    secondary: 'bg-indigo-100', 
+    text: 'text-indigo-600', 
+    light: 'bg-indigo-50', 
+    border: 'border-indigo-200', 
+    hover: 'hover:bg-indigo-50' 
+  },
+  emerald: { 
+    primary: 'bg-emerald-600', 
+    secondary: 'bg-emerald-100', 
+    text: 'text-emerald-600', 
+    light: 'bg-emerald-50', 
+    border: 'border-emerald-200', 
+    hover: 'hover:bg-emerald-50' 
+  },
+  violet: { 
+    primary: 'bg-violet-600', 
+    secondary: 'bg-violet-100', 
+    text: 'text-violet-600', 
+    light: 'bg-violet-50', 
+    border: 'border-violet-200', 
+    hover: 'hover:bg-violet-50' 
+  },
+  orange: { 
+    primary: 'bg-orange-500', 
+    secondary: 'bg-orange-100', 
+    text: 'text-orange-600', 
+    light: 'bg-orange-50', 
+    border: 'border-orange-200', 
+    hover: 'hover:bg-orange-50' 
+  }
 };
 
 export type Language = 'th' | 'en';

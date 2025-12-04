@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { XMarkIcon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { MenuItem, Theme, THEME_COLORS, Language } from '../types';
+import { Theme, THEME_COLORS, Language } from '../types';
 import { SIDEBAR_DATA, UI_TEXT } from '../constants';
 
 interface SidebarProps {
@@ -14,7 +15,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onSelectPrompt, theme, language }) => {
   const themeData = THEME_COLORS[theme];
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-    "การอ้างอิงในเนื้อหา": true // Default open key (mapped to Thai title)
+    "การอ้างอิงในเนื้อหา": true
   });
 
   const toggleSection = (title: string) => {
@@ -28,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onSelectPrompt, them
     if (prompt) {
       onSelectPrompt(prompt[language]);
       // On mobile, auto close sidebar after selection
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 1024) {
         onClose();
       }
     }
@@ -39,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onSelectPrompt, them
       {/* Overlay for Mobile */}
       {isOpen && (
         <div 
-            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
             onClick={onClose}
         />
       )}
@@ -47,19 +48,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onSelectPrompt, them
       {/* Sidebar Container */}
       <aside 
         className={`
-            fixed md:static inset-y-0 left-0 z-50
-            w-72 bg-white border-r border-slate-200 shadow-xl md:shadow-none
-            transform transition-transform duration-300 ease-in-out
-            ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0 md:w-0 md:opacity-0 md:overflow-hidden lg:w-72 lg:translate-x-0 lg:opacity-100'}
+            fixed lg:static inset-y-0 left-0 z-50
+            w-72 bg-white border-r border-slate-200 shadow-xl lg:shadow-none
+            transform transition-transform duration-300 ease-in-out shrink-0
             flex flex-col h-full
+            ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between shrink-0">
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between shrink-0 h-16">
             <h2 className="font-bold text-slate-800 text-lg flex items-center gap-2">
                 {UI_TEXT[language].menu}
             </h2>
-            <button onClick={onClose} className="md:hidden p-1 text-slate-500 hover:bg-slate-100 rounded-full">
+            <button onClick={onClose} className="lg:hidden p-1 text-slate-500 hover:bg-slate-100 rounded-full">
                 <XMarkIcon className="w-6 h-6" />
             </button>
         </div>
@@ -67,7 +68,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onSelectPrompt, them
         {/* Menu Items */}
         <div className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-hide">
             {SIDEBAR_DATA.map((section, index) => {
-                // Use a consistent key for expansion state, e.g., the Thai title as ID
                 const sectionKey = section.title['th']; 
                 const isExpanded = expandedSections[sectionKey];
                 const Icon = section.icon;
@@ -111,8 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onSelectPrompt, them
         
         {/* Footer Info */}
         <div className="p-4 border-t border-slate-100 text-center text-[10px] text-slate-400 shrink-0">
-            <p>© 2025 Dr. Nana AI</p>
-            <p>APA 7th Edition Expert</p>
+            <p>© 2025 Dr.Nareerat Kitiasa All rights reserved.</p>
         </div>
       </aside>
     </>

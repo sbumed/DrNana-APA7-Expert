@@ -4,20 +4,27 @@ import { Attachment } from "../types";
 
 let chatSession: Chat | null = null;
 
-export const getStoredApiKey = (): string | null => {
-  return localStorage.getItem('gemini_api_key');
-};
-
-export const setStoredApiKey = (key: string) => {
-  localStorage.setItem('gemini_api_key', key);
+// Safely retrieve API Key from environment to avoid "process is not defined" crashes in browser
+const getEnvApiKey = (): string | undefined => {
+  try {
+    // Check if process exists and is an object before accessing env
+    // @ts-ignore
+    if (typeof process !== 'undefined' && process && process.env) {
+      // @ts-ignore
+      return process.env.API_KEY;
+    }
+  } catch (e) {
+    // Ignore any errors accessing process
+    return undefined;
+  }
+  return undefined;
 };
 
 export const initializeChatSession = () => {
-  // Priority: Environment Variable -> Local Storage
-  const apiKey = process.env.API_KEY || getStoredApiKey();
+  const apiKey = getEnvApiKey();
   
   if (!apiKey) {
-    console.warn("API Key missing. Waiting for user input.");
+    console.error("API Key not found in environment variables.");
     throw new Error("API Key not found");
   }
 

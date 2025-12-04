@@ -1,6 +1,6 @@
 
 import { MenuItem, Language } from './types';
-import { BookOpenIcon, LinkIcon, DocumentTextIcon, ChatBubbleBottomCenterTextIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import { BookOpenIcon, LinkIcon, DocumentTextIcon, ChatBubbleBottomCenterTextIcon, ChartBarIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 
 export const SYSTEM_INSTRUCTION = `
 You are Dr. Nana, a world-class expert in APA 7th Edition (American Psychological Association) academic writing and citation style.
@@ -47,8 +47,8 @@ Dr. Nana: "## 📖 รูปแบบการอ้างอิงหนัง�
 `;
 
 export const WELCOME_MESSAGE: Record<Language, string> = {
-  th: `### สวัสดีค่ะ! ดิฉัน **ดร.นาน่า** (Dr. Nana) 👩‍🏫
-ผู้เชี่ยวชาญด้าน **APA 7th Edition** ยินดีให้คำปรึกษาค่ะ
+  th: `### สวัสดีค่ะ! ดิฉัน **ดร.นาน่า V.2** (Dr. Nana) 👩‍🏫
+ผู้เชี่ยวชาญด้าน **APA 7th Edition** โฉมใหม่ ยินดีให้คำปรึกษาค่ะ
 
 สามารถสอบถามเรื่อง:
 *   📚 **การเขียนอ้างอิง** (References)
@@ -57,8 +57,8 @@ export const WELCOME_MESSAGE: Record<Language, string> = {
 *   📄 **การจัดรูปแบบเอกสาร** (Formatting)
 
 *เลือกหัวข้อจากเมนู หรือพิมพ์คำถามได้เลยค่ะ* 👇`,
-  en: `### Hello! I am **Dr. Nana** 👩‍🏫
-An **APA 7th Edition** Expert, here to assist you.
+  en: `### Hello! I am **Dr. Nana V.2** 👩‍🏫
+Your **APA 7th Edition** Expert, here to assist you with the latest updates.
 
 I can help you with:
 *   📚 **Reference List Entries**
@@ -69,22 +69,24 @@ I can help you with:
 *Select a topic from the menu or type your question below* 👇`
 };
 
-export const DR_NANA_IMAGE_URL = "https://i.postimg.cc/CxnC1yPV/Dr-Nana.png";
-export const USER_AVATAR_URL = "https://api.dicebear.com/9.x/notionists/svg?seed=Felix";
+// Updated Image URL as requested
+export const DR_NANA_IMAGE_URL = "https://i.postimg.cc/cCTTx4Jj/Dr-Nana.png";
+// Updated User Avatar to 3D Cute style (Fun Emoji seed)
+export const USER_AVATAR_URL = "https://api.dicebear.com/9.x/fun-emoji/svg?seed=Mochi";
 
 export const SUGGESTION_QUESTIONS: Record<Language, string[]> = {
   th: [
-    "อ้างอิงเว็บไซต์ที่ไม่มีชื่อผู้แต่งยังไง?",
+    "ช่วยเขียนอ้างอิงเว็บไซต์ให้หน่อย",
     "รูปแบบการเขียนบรรณานุกรมหนังสือแปล",
-    "ความแตกต่างระหว่างการอ้างอิงในเนื้อหาและท้ายเล่ม",
+    "ช่วยสร้างอ้างอิงในเนื้อหาสำหรับผู้แต่ง 3 คน",
     "การตั้งค่าหน้ากระดาษตามหลัก APA 7",
     "อ้างอิงคลิป YouTube ต้องใส่อะไรบ้าง?",
     "การรายงานผล t-test ในเนื้อหาทำอย่างไร?"
   ],
   en: [
-    "How to cite a website with no author?",
+    "Help me cite a website URL",
     "Reference format for translated books",
-    "Difference between in-text citation and reference list",
+    "Generate in-text citation for 3 authors",
     "Paper formatting guidelines in APA 7",
     "How to cite a YouTube video?",
     "How to report t-test results in text?"
@@ -100,11 +102,6 @@ export const UI_TEXT: Record<Language, any> = {
         copied: "คัดลอกแล้ว",
         pdf: "ส่งออก PDF",
         disclaimer: "ดร.นาน่าอาจมีข้อผิดพลาดได้ โปรดตรวจสอบความถูกต้องกับคู่มือ APA 7th Edition อีกครั้ง",
-        apiKeyTitle: "ตั้งค่า API Key",
-        apiKeyDesc: "เพื่อเริ่มปรึกษากับ ดร.นาน่า กรุณาระบุ Google AI Studio API Key ของคุณ (คีย์จะถูกบันทึกในเบราว์เซอร์ของคุณเท่านั้น)",
-        saveKey: "บันทึกและเริ่มใช้งาน",
-        getKey: "รับคีย์ฟรี",
-        settings: "ตั้งค่า",
         thinking: "ดร.นาน่า กำลังตรวจสอบข้อมูล...",
         menu: "เมนูหลัก",
         menuRecommend: "เมนูแนะนำ",
@@ -120,11 +117,6 @@ export const UI_TEXT: Record<Language, any> = {
         copied: "Copied",
         pdf: "Export PDF",
         disclaimer: "Dr. Nana can make mistakes. Please verify important information with the APA 7th Edition manual.",
-        apiKeyTitle: "Set API Key",
-        apiKeyDesc: "To start consulting with Dr. Nana, please provide your Google AI Studio API Key (stored locally in your browser).",
-        saveKey: "Save & Start",
-        getKey: "Get Free Key",
-        settings: "Settings",
         thinking: "Dr. Nana is thinking...",
         menu: "Menu",
         menuRecommend: "Suggested Topics",
@@ -136,24 +128,42 @@ export const UI_TEXT: Record<Language, any> = {
 
 export const SIDEBAR_DATA: MenuItem[] = [
     {
-        title: { th: "การอ้างอิงในเนื้อหา", en: "In-text Citations" },
+        title: { th: "ตัวช่วยเขียนอ้างอิงในเนื้อหา", en: "In-text Citation Generator" },
+        icon: PencilSquareIcon,
+        subItems: [
+            { 
+                title: { th: "1 ผู้แต่ง (1 Author)", en: "1 Author" }, 
+                prompt: { th: "ช่วยสร้างอ้างอิงในเนื้อหา (In-text citation) สำหรับผู้แต่ง 1 คน กรุณาถามชื่อผู้แต่งและปีพิมพ์จากฉัน", en: "Help me generate an in-text citation for 1 author. Please ask me for the author's name and year." } 
+            },
+            { 
+                title: { th: "2 ผู้แต่ง (2 Authors)", en: "2 Authors" }, 
+                prompt: { th: "ช่วยสร้างอ้างอิงในเนื้อหาสำหรับผู้แต่ง 2 คน กรุณาถามชื่อผู้แต่งทั้งสองและปีพิมพ์", en: "Help me generate an in-text citation for 2 authors. Please ask me for the names and year." } 
+            },
+            { 
+                title: { th: "3 คนขึ้นไป (3+ Authors)", en: "3+ Authors" }, 
+                prompt: { th: "ช่วยสร้างอ้างอิงในเนื้อหาสำหรับผู้แต่ง 3 คนขึ้นไป (ใช้ et al.) กรุณาถามชื่อผู้แต่งคนแรกและปีพิมพ์", en: "Help me generate an in-text citation for 3+ authors (using et al.). Please ask me for the first author's name and year." } 
+            },
+            { 
+                title: { th: "องค์กร/หน่วยงาน", en: "Group Author" }, 
+                prompt: { th: "ช่วยสร้างอ้างอิงในเนื้อหาสำหรับองค์กร (Group Author) กรุณาถามชื่อองค์กร (และตัวย่อถ้ามี) และปีพิมพ์", en: "Help me generate an in-text citation for a Group Author. Please ask me for the organization name (and abbreviation if applicable) and year." } 
+            }
+        ]
+    },
+    {
+        title: { th: "กฎการอ้างอิง (Rules)", en: "Citation Rules" },
         icon: ChatBubbleBottomCenterTextIcon,
         subItems: [
             { 
-                title: { th: "1 ผู้แต่ง (One author)", en: "One Author" }, 
-                prompt: { th: "ขอตัวอย่างการอ้างอิงในเนื้อหา (In-text citation) สำหรับผู้แต่ง 1 คน แบบเน้นผู้แต่งและเน้นข้อความ", en: "Provide examples of in-text citations for one author (parenthetical and narrative)." } 
+                title: { th: "หลักการ 1 ผู้แต่ง", en: "One Author Rules" }, 
+                prompt: { th: "อธิบายกฎการอ้างอิงในเนื้อหาสำหรับผู้แต่ง 1 คน พร้อมตัวอย่าง", en: "Explain in-text citation rules for one author with examples." } 
             },
             { 
-                title: { th: "2 ผู้แต่ง (Two authors)", en: "Two Authors" }, 
-                prompt: { th: "ขอตัวอย่างการอ้างอิงในเนื้อหา สำหรับผู้แต่ง 2 คน", en: "Provide examples of in-text citations for two authors." } 
+                title: { th: "หลักการ 2 ผู้แต่ง", en: "Two Authors Rules" }, 
+                prompt: { th: "อธิบายกฎการอ้างอิงในเนื้อหาสำหรับผู้แต่ง 2 คน พร้อมตัวอย่าง", en: "Explain in-text citation rules for two authors with examples." } 
             },
             { 
-                title: { th: "3 คนขึ้นไป (3+ authors)", en: "3+ Authors (et al.)" }, 
+                title: { th: "หลักการ 3 คนขึ้นไป", en: "3+ Authors Rules" }, 
                 prompt: { th: "การใช้ et al. สำหรับผู้แต่ง 3 คนขึ้นไปใน APA 7 ทำอย่างไร", en: "How to use 'et al.' for 3 or more authors in APA 7?" } 
-            },
-            { 
-                title: { th: "องค์กร/หน่วยงาน", en: "Group Authors" }, 
-                prompt: { th: "การอ้างอิงในเนื้อหาสำหรับองค์กร (Group Author) ที่มีและไม่มีตัวย่อ", en: "How to cite group authors (with and without abbreviations) in text?" } 
             },
             { 
                 title: { th: "การอ้างอิงซ้ำ (Ibid)", en: "Recurring Citations (Ibid)" }, 
@@ -166,16 +176,16 @@ export const SIDEBAR_DATA: MenuItem[] = [
         icon: BookOpenIcon,
         subItems: [
             { 
+                title: { th: "เว็บไซต์ (Webpage)", en: "Webpage" }, 
+                prompt: { th: "ช่วยเขียนอ้างอิงบรรณานุกรมสำหรับเว็บไซต์ (Webpage) กรุณาถาม URL, ชื่อบทความ, ชื่อผู้แต่ง (ถ้ามี) และวันที่จากฉัน", en: "Help me create an APA 7 reference for a Webpage. Please ask me for the URL, Article Title, Author, and Date." } 
+            },
+            { 
                 title: { th: "หนังสือ (Book)", en: "Book" }, 
                 prompt: { th: "รูปแบบบรรณานุกรมสำหรับหนังสือ (Book) ใน APA 7", en: "Reference format for a Book in APA 7." } 
             },
             { 
                 title: { th: "บทความวารสาร (Journal)", en: "Journal Article" }, 
                 prompt: { th: "รูปแบบบรรณานุกรมสำหรับบทความวารสาร (Journal Article) มี DOI และไม่มี DOI", en: "Reference format for Journal Articles (with and without DOI)." } 
-            },
-            { 
-                title: { th: "เว็บไซต์ (Website)", en: "Website" }, 
-                prompt: { th: "การเขียนอ้างอิงเว็บไซต์ (Website) ในรูปแบบ APA 7", en: "Reference format for a Website in APA 7." } 
             },
             { 
                 title: { th: "วิทยานิพนธ์ (Thesis)", en: "Thesis/Dissertation" }, 
@@ -214,10 +224,6 @@ export const SIDEBAR_DATA: MenuItem[] = [
             { 
                 title: { th: "Chi-Square", en: "Chi-Square" }, 
                 prompt: { th: "วิธีรายงานผล Chi-Square Test ตามหลัก APA 7 พร้อมตัวอย่างตารางและการแปลผล", en: "How to report Chi-Square Test results in APA 7." } 
-            },
-            { 
-                title: { th: "สัญลักษณ์ทางสถิติ", en: "Statistical Symbols" }, 
-                prompt: { th: "สรุปสัญลักษณ์ทางสถิติที่ใช้บ่อยใน APA 7 (เช่น M, SD, p, t, F) และหลักการเขียน (ตัวเอียง/ไม่เอียง)", en: "Common statistical symbols in APA 7 (M, SD, p, t, F) and italics rules." } 
             }
         ]
     },
