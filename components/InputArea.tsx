@@ -1,5 +1,6 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { PaperAirplaneIcon, PaperClipIcon, XMarkIcon, DocumentIcon, PhotoIcon, TableCellsIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
+import { PaperAirplaneIcon, PaperClipIcon, XMarkIcon, DocumentIcon, PhotoIcon, TableCellsIcon } from '@heroicons/react/24/solid';
 import { Theme, THEME_COLORS, Language, Attachment } from '../types';
 import { UI_TEXT } from '../constants';
 
@@ -109,7 +110,7 @@ const InputArea: React.FC<InputAreaProps> = ({ onSend, disabled, theme, language
         onSubmit={handleSubmit}
         className="w-full mx-auto relative flex flex-col bg-slate-50 border border-slate-300 rounded-xl focus-within:ring-2 focus-within:ring-offset-1 focus-within:border-transparent transition-all shadow-sm hover:border-slate-400"
         style={{ 
-             '--tw-ring-color': theme === 'teal' ? '#14b8a6' : theme === 'blue' ? '#3b82f6' : theme === 'rose' ? '#e11d48' : '#d97706' 
+             '--tw-ring-color': theme === 'indigo' ? '#4f46e5' : theme === 'emerald' ? '#059669' : theme === 'violet' ? '#7c3aed' : '#d97706' 
         } as React.CSSProperties}
       >
         {/* File Preview Section - Integrated inside the input box */}
@@ -182,16 +183,6 @@ const InputArea: React.FC<InputAreaProps> = ({ onSend, disabled, theme, language
             </button>
         </div>
       </form>
-      
-      <div className="flex justify-between items-center mt-2 px-1">
-        <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-medium">
-            <InformationCircleIcon className="w-3.5 h-3.5 text-slate-400" />
-            <span className="tracking-wide">Supports: JPG, PNG, PDF, CSV, XLSX</span>
-        </div>
-        <p className="text-[10px] text-slate-400 select-none text-right opacity-70">
-            {UI_TEXT[language].disclaimer}
-        </p>
-      </div>
     </div>
   );
 };

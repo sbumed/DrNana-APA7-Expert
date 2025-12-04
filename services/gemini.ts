@@ -4,31 +4,9 @@ import { Attachment } from "../types";
 
 let chatSession: Chat | null = null;
 
-// Safely retrieve API Key from environment to avoid "process is not defined" crashes in browser
-const getEnvApiKey = (): string | undefined => {
-  try {
-    // Check if process exists and is an object before accessing env
-    // @ts-ignore
-    if (typeof process !== 'undefined' && process && process.env) {
-      // @ts-ignore
-      return process.env.API_KEY;
-    }
-  } catch (e) {
-    // Ignore any errors accessing process
-    return undefined;
-  }
-  return undefined;
-};
-
 export const initializeChatSession = () => {
-  const apiKey = getEnvApiKey();
-  
-  if (!apiKey) {
-    console.error("API Key not found in environment variables.");
-    throw new Error("API Key not found");
-  }
-
-  const ai = new GoogleGenAI({ apiKey });
+  // @ts-ignore
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const config = {
     systemInstruction: SYSTEM_INSTRUCTION,
