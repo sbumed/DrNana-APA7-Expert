@@ -5,8 +5,15 @@ import { Attachment } from "../types";
 let chatSession: Chat | null = null;
 
 export const initializeChatSession = () => {
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey) {
+    console.error("API_KEY is missing in environment variables. Please check your .env file or deployment settings.");
+    throw new Error("API Key is missing");
+  }
+
   // @ts-ignore
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: apiKey });
 
   const config = {
     systemInstruction: SYSTEM_INSTRUCTION,
@@ -16,18 +23,28 @@ export const initializeChatSession = () => {
     maxOutputTokens: 8192,
   };
 
-  // Using gemini-2.5-flash for speed and efficiency in text tasks
-  chatSession = ai.chats.create({
-    model: 'gemini-2.5-flash',
-    config,
-  });
+  try {
+      // Using gemini-2.5-flash for speed and efficiency in text tasks
+      chatSession = ai.chats.create({
+        model: 'gemini-2.5-flash',
+        config,
+      });
+  } catch (err) {
+      console.error("Failed to create chat session:", err);
+      throw err;
+  }
 
   return chatSession;
 };
 
 export const sendMessageToGemini = async (message: string, attachments: Attachment[] = []): Promise<string> => {
   if (!chatSession) {
-    initializeChatSession();
+    try {
+        initializeChatSession();
+    } catch (e) {
+        console.error("Initialization failed:", e);
+        throw new Error("Failed to initialize chat session. API Key might be missing.");
+    }
   }
 
   if (!chatSession) {
@@ -65,6 +82,10 @@ export const sendMessageToGemini = async (message: string, attachments: Attachme
     return response.text || "I'm sorry, I couldn't generate a response.";
   } catch (error) {
     console.error("Error sending message to Gemini:", error);
+    // Log specifics if available
+    if (error instanceof Error) {
+        console.error("Error details:", error.message, error.stack);
+    }
     throw error;
   }
 };
